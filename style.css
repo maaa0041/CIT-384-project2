@@ -46,21 +46,30 @@
   }
   
   .pet-image {
-    height:250px;
-    width:200px;
-    transform-origin: center center;
-    background-color: #f0f0f0;
+   position: relative;
+  z-index: 2;
+  width: min(260px, 80%);
+  height: 300px;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 8px rgba(72,47,92,.2));
+  transform-origin: center center;
   }
   
   .dashboard div {
     display:block;
+    background-color: #fffaf0;
   }
   
   .pet-image-container {
-    float:left;
-    padding:10px;
-    position: relative;
-
+  position: relative;
+  display: flex;
+  flex: 1 1 50%;
+  align-items: center;
+  justify-content: center;
+  min-height: 430px;
+  padding: 32px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #fff0b8, #ffd5e4 55%, #c9f4dc);
   }
 
   .dashboard {
@@ -97,21 +106,21 @@
 }
 
 .change-name-button{
-  width: 100px;
-    margin-bottom: 20px;
-      margin-right: 10px;
-      text-align: center;
-      float: left;
-    font-size:15px;
-    background-color: #1e2835;
-    border-color: #404853;
-    cursor:pointer;
-    background-image: linear-gradient(to bottom,rgba(246,246,246,.1)0%,rgba(30,40,53,0)66%);
-    color: #fafafa;
+ width: 100px; 
+ padding: 8px; 
+ background: #9de4c2; 
+ color: #245b4b; 
 }
 
 
-/* Animation that rotates the pet 360 degrees */
+.button-container button:hover,
+.change-name-button:hover { filter: brightness(1.07); transform: translateY(-2px); }
+
+.button-container button:active,
+.change-name-button:active { box-shadow: 0 1px 0 rgba(56,43,77,.2); transform: translateY(2px); }
+
+
+/* Animation that rotates the pet 15 degrees back and forth */
 
 @keyframes petSpin {
     0% {
@@ -135,8 +144,64 @@
     }
 }
 
-
+#name-input {
+ width: calc(100% - 116px);
+  min-height: 44px;
+  margin-right: 8px;
+  padding: 9px 12px;
+  border: 2px solid #ded2f4;
+  border-radius: 12px;
+  color: var(--ink);
+  font: inherit;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
 /* Class that activates the animation */
 .pet-image.rotate-pet  {
     animation: petSpin 1s ease-in-out;
+}
+
+@keyframes swimmingAnimation {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateX(-12px) rotate(-8deg);
+    }
+
+    50% {
+        transform: translateX(12px) rotate(8deg);
+    }
+
+    75% {
+        transform: translateX(-8px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg);
+    }
+}
+
+.pet-image.swimming {
+    animation: swimmingAnimation 1s ease-in-out;
+}
+
+.water {
+    position: absolute;
+    display: none;
+    z-index: 3;
+    width: 260px;
+    height: auto;
+    left: 50%;
+    top: 62%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@media (max-width: 700px) {
+  body { padding: 22px 12px; }
+  main { display: block; }
+  .pet-image-container { min-height: 300px; }
+  .dashboard { padding: 26px 20px 30px; }
 }

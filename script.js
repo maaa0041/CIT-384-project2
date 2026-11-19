@@ -9,6 +9,7 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     $('.exercise-button').click(clickedExerciseButton);
     //You are able to change the name of the pet at anytime now.
     $('.change-name-button').click(clickedChangeNameButton);
+    $('.swim-button').click(clickedSwimButton);
 
   
 
@@ -51,6 +52,15 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
       checkAndUpdatePetInfoInHtml();
     }
   
+  function clickedSwimButton() {
+      // Decrease pet happiness
+      pet_info['happiness'] += 2;
+      // Decrease pet weight
+      pet_info['weight'] -= 1;
+      swim();
+      checkAndUpdatePetInfoInHtml();
+    }
+
     function checkAndUpdatePetInfoInHtml() {
       checkWeightAndHappinessBeforeUpdating();  
       updatePetInfoInHtml();
@@ -185,21 +195,45 @@ function quackSound() {
     
 }
 function rotatePet() {
-
-    // Select the pet image
     var pet = $('.pet-image');
 
-    //& Remove the previous animation
-    pet.removeClass('rotate-pet');
+    //& Remove the swim animation first
+    pet.removeClass('swimming rotate-pet');
 
-    // Reset the animation so it can play again
+    // Reset the animation
     void pet[0].offsetWidth;
 
-    // Apply the rotation animation
+    // Start exercise animation
     pet.addClass('rotate-pet');
+
+    // Remove the class after the animation finishes
+    setTimeout(function() {
+        pet.removeClass('rotate-pet');
+    }, 1000);
 }
 
+function swim() {
+    var pet = $('.pet-image');
+    var water = $('.water');
 
+    // Remove conflicting animations
+    pet.removeClass('rotate-pet swimming');
+
+    // Reset the animation
+    void pet[0].offsetWidth;
+
+    // Start the swimming animation
+    pet.addClass('swimming');
+
+    // Show the water
+    water.stop(true, true).fadeIn(200);
+
+    // Hide the water when the animation ends
+    setTimeout(function() {
+        pet.removeClass('swimming');
+        water.fadeOut(200);
+    }, 1000);
+}
 
     // Updates your HTML with the current values in your pet_info object
     function updatePetInfoInHtml() {
